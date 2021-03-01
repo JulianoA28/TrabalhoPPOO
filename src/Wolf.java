@@ -1,6 +1,6 @@
 import java.util.List;
 import java.util.Iterator;
-import java.util.Random;
+//import java.util.Random;
 
 /**
  * A simple model of a wolf. Wolf age, move, breed, and die.
