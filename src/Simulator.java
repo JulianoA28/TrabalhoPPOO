@@ -16,7 +16,7 @@ public class Simulator {
     // The private static final variables represent
     // configuration information for the simulation.
     // The default width for the grid.
-    private static final int DEFAULT_WIDTH = 50;
+    private static final int DEFAULT_WIDTH = 100;
     // The default depth of the grid.
     private static final int DEFAULT_DEPTH = 50;
     // The probability that a fox will be created in any given grid position.

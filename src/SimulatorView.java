@@ -43,11 +43,19 @@ public class SimulatorView extends JFrame {
         setLocation(100, 50);
 
         fieldView = new FieldView(height, width);
-
+		
+		JPanel p1 = new JPanel();
+        p1.setLayout(new BorderLayout());
+        p1.add(new JButton("INICIAR"), BorderLayout.WEST);
+        p1.add(new JButton("REINICIAR"), BorderLayout.EAST);
+        p1.add(population, BorderLayout.CENTER);
+        
         Container contents = getContentPane();
         contents.add(stepLabel, BorderLayout.NORTH);
         contents.add(fieldView, BorderLayout.CENTER);
-        contents.add(population, BorderLayout.SOUTH);
+        contents.add(p1, BorderLayout.SOUTH);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        
         pack();
         setVisible(true);
     }
