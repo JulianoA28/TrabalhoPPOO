@@ -1,5 +1,5 @@
 import java.util.List;
-//import java.util.Random;
+import java.util.Random;
 
 /**
  * A simple model of a rabbit. Rabbits age, move, breed, and die.
@@ -7,7 +7,7 @@ import java.util.List;
  * @author David J. Barnes and Michael Kolling
  * @version 2002-04-11
  */
-public class Rabbit extends Animal {
+public class Rabbit extends Animal implements Prey {
 
     /**
      * Create a new rabbit. A rabbit may be created with age zero (a new born) or
@@ -23,6 +23,7 @@ public class Rabbit extends Animal {
      * This is what the rabbit does most of the time - it runs around. Sometimes it
      * will breed or die of old age.
      */
+	@Override
     public void run(Field updatedField, List newRabbits) {
         incrementAge();
         if (getAlive()) {

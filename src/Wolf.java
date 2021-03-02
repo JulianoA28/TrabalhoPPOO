@@ -1,6 +1,6 @@
 import java.util.List;
 import java.util.Iterator;
-//import java.util.Random;
+import java.util.Random;
 
 /**
  * A simple model of a wolf. Wolf age, move, breed, and die.
@@ -35,6 +35,7 @@ public class Wolf extends Animal implements Predator {
      * This is what the fox does most of the time: it hunts for rabbits. In the
      * process, it might breed, die of hunger, or die of old age.
      */
+	@Override
     public void hunt(Field currentField, Field updatedField, List newPredator) {
         incrementAge();
         incrementHunger();
@@ -42,11 +43,11 @@ public class Wolf extends Animal implements Predator {
             // New foxes are born into adjacent locations.
             int births = breed();
             for (int b = 0; b < births; b++) {
-                Fox newFox = new Fox(false);
-                newPredator.add(newFox);
+                Wolf newWolf = new Wolf(false);
+                newPredator.add(newWolf);
                 Location loc = updatedField.randomAdjacentLocation(getLocation());
-                newFox.setLocation(loc);
-                updatedField.place(newFox, loc);
+                newWolf.setLocation(loc);
+                updatedField.place(newWolf, loc);
             }
             // Move towards the source of food if found.
             Location newLocation = findFood(currentField, getLocation());
@@ -80,6 +81,7 @@ public class Wolf extends Animal implements Predator {
      * @param location Where in the field it is located.
      * @return Where food was found, or null if it wasn't.
      */
+	@Override
     public Location findFood(Field field, Location location) {
         Iterator adjacentLocations = field.adjacentLocations(location);
         while (adjacentLocations.hasNext()) {
