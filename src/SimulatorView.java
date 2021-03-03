@@ -1,5 +1,5 @@
 import java.awt.*;
-//import java.awt.event.*;
+import java.awt.event.*;
 import javax.swing.*;
 import java.util.HashMap;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @author David J. Barnes and Michael Kolling
  * @version 2002-04-23
  */
-public class SimulatorView extends JFrame {
+public class SimulatorView extends JFrame implements ActionListener {
     // Colors used for empty locations.
     private static final Color EMPTY_COLOR = Color.white;
 
@@ -32,6 +32,7 @@ public class SimulatorView extends JFrame {
     // A statistics object computing and storing simulation information
     private FieldStats stats;
 
+	private Simulator simulator;
     /**
      * Create a view of the given width and height.
      */
@@ -56,6 +57,14 @@ public class SimulatorView extends JFrame {
 		botaoPlantacao = new JButton("Plantacao");
 		botaoToca = new JButton("Toca");
 		
+		
+		botaoReiniciar.addActionListener(this);
+		botaoLongSimulator.addActionListener(this);
+		botaoSimulate.addActionListener(this); 
+		botaoLobo.addActionListener(this);
+		botaoChuva.addActionListener(this);
+		botaoPlantacao.addActionListener(this);
+		botaoToca.addActionListener(this);
 		
 		JPanel test = new JPanel();
 		test.setLayout(new BorderLayout(0, 2));
@@ -95,9 +104,47 @@ public class SimulatorView extends JFrame {
         
          
     }
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		 switch (e.getActionCommand()) {
+			case "Simulate":
+				int value = Integer.parseInt(CampoSimulate.getText());
+				if(value > 0) {
+					simulator.simulate(value);
+				}
+				
+				break;
+			case "Reiniciar":
+				simulator.reset();
+				
+				break;
+			case "Run Long Simulator":
+				simulator.runLongSimulation();
+				
+				break;
+			case "Lobo":
+				
+				System.out.println("Lobo");
+				break;
+			case "Chuva":
+				
+				System.out.println("Chuva");
+				break;
+			case "Plantacao":
+				
+				System.out.println("Plantacao");
+				break;
+			case "Toca":
+				
+				System.out.println("Toca");
+				break;
+		}
+	}
 
-		
 
+	public void setSimulator(Simulator simulator) { 
+		this.simulator = simulator;
+	}
     /**
      * Define a color to be used for a given class of animal.
      */
