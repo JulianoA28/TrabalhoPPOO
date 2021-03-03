@@ -1,5 +1,5 @@
 import java.awt.*;
-//import java.awt.event.*;
+import java.awt.event.*;
 import javax.swing.*;
 import java.util.HashMap;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @author David J. Barnes and Michael Kolling
  * @version 2002-04-23
  */
-public class SimulatorView extends JFrame {
+public class SimulatorView extends JFrame implements ActionListener {
     // Colors used for empty locations.
     private static final Color EMPTY_COLOR = Color.white;
 
@@ -23,11 +23,17 @@ public class SimulatorView extends JFrame {
     private final String POPULATION_PREFIX = "Population: ";
     private JLabel stepLabel, population;
     private FieldView fieldView;
-
+    private JButton botaoReiniciar, botaoLongSimulator, botaoSimulate, botaoLobo, botaoChuva, botaoPlantacao, botaoToca;
+	private JTextField CampoSimulate;
+	private JPanel controls;
+    private JPanel screen;
     // A map for storing colors for participants in the simulation
     private HashMap colors;
     // A statistics object computing and storing simulation information
     private FieldStats stats;
+    
+    private Simulator simulator;
+    
 
     /**
      * Create a view of the given width and height.
@@ -39,39 +45,103 @@ public class SimulatorView extends JFrame {
         setTitle("Fox and Rabbit Simulation");
         stepLabel = new JLabel(STEP_PREFIX, JLabel.CENTER);
         population = new JLabel(POPULATION_PREFIX, JLabel.CENTER);
-
+		Container contents = getContentPane();
+		
         setLocation(100, 50);
 
         fieldView = new FieldView(height, width);
+		botaoReiniciar = new JButton("Reiniciar");
+		botaoLongSimulator = new JButton("Run Long Simulator");
+		CampoSimulate = new JTextField(16);
+		botaoSimulate = new JButton("Simulate");
+		botaoLobo = new JButton("Lobo");
+		botaoChuva = new JButton("Chuva");
+		botaoPlantacao = new JButton("Plantacao");
+		botaoToca = new JButton("Toca");
 		
-		JPanel p1 = new JPanel();
-        p1.setLayout(new BorderLayout());
-        p1.add(new JButton("INICIAR"), BorderLayout.WEST);
-        p1.add(new JButton("REINICIAR"), BorderLayout.EAST);
-        p1.add(population, BorderLayout.CENTER);
+		
+		JPanel test = new JPanel();
+		test.setLayout(new BorderLayout(0, 2));
+		test.add(CampoSimulate, BorderLayout.NORTH);
+        test.add(botaoSimulate, BorderLayout.SOUTH);
+		
+		controls = new JPanel();
+        controls.setLayout(new FlowLayout());
         
-        Container contents = getContentPane();
-        contents.add(stepLabel, BorderLayout.NORTH);
-        contents.add(fieldView, BorderLayout.CENTER);
-        contents.add(p1, BorderLayout.SOUTH);
+        controls.add(botaoLobo);
+        controls.add(botaoChuva);
+        controls.add(botaoPlantacao);
+        controls.add(botaoToca);
+        controls.add(test);
+        controls.add(botaoLongSimulator);
+        controls.add(botaoReiniciar);
+        
+        botaoReiniciar.addActionListener(this);
+		botaoLongSimulator.addActionListener(this);
+		botaoSimulate.addActionListener(this); 
+		botaoLobo.addActionListener(this);
+		botaoChuva.addActionListener(this);
+		botaoPlantacao.addActionListener(this);
+		botaoToca.addActionListener(this);
+        
+        JPanel screen = new JPanel();
+        screen.setLayout(new BorderLayout());
+        screen.add(stepLabel, BorderLayout.NORTH);
+        screen.add(fieldView, BorderLayout.CENTER);
+        screen.add(population, BorderLayout.SOUTH);
+        
+        contents.add(screen, BorderLayout.CENTER);
+        contents.add(controls, BorderLayout.SOUTH);
+        
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         
         pack();
         setVisible(true);
+        
+        
+        
+         
+    }
+    
+    public void setSimulator(Simulator simulator) {
+		this.simulator = simulator;
+	}
+    
+    @Override
+    public void actionPerformed(ActionEvent e)
+    {
+		switch(e.getActionCommand()) {
+			case "Reiniciar":
+				System.out.println("Reiniciar");
+				break;
+			case "Lobo":
+				System.out.println("Lobo");
+				break;
+			case "Simulate":
+				int value = Integer.parseInt(CampoSimulate.getText());
+				if (value > 0) {
+					simulator.simulate(value);
+				}
+				break;
+		
+		}
+		
+	}
+
+		
+
+    /**
+     * Define a color to be used for a given class of animal.
+     */
+    public void setColor(Class actorClass, Color color) {
+        colors.put(actorClass, color);
     }
 
     /**
      * Define a color to be used for a given class of animal.
      */
-    public void setColor(Class animalClass, Color color) {
-        colors.put(animalClass, color);
-    }
-
-    /**
-     * Define a color to be used for a given class of animal.
-     */
-    private Color getColor(Class animalClass) {
-        Color col = (Color) colors.get(animalClass);
+    private Color getColor(Class actorClass) {
+        Color col = (Color) colors.get(actorClass);
         if (col == null) {
             // no color defined for this class
             return UNKNOWN_COLOR;

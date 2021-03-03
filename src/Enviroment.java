@@ -3,7 +3,7 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.HashMap;
 
-public class Enviroment {
+public class Enviroment extends Actor{
 	
 	private static final HashMap<String, Integer> AREA = new HashMap<String, Integer>();
 	
@@ -14,22 +14,23 @@ public class Enviroment {
 		AREA.put("Hole", 1);
 		AREA.put("Rain", 6);
 		
-		BREEDING_BONUS.put("Crop", 2);
-		BREEDING_BONUS.put("Hole", 1);
-		BREEDING_BONUS.put("Rain", -2);
+		BREEDING_BONUS.put("Crop", 2.0);
+		BREEDING_BONUS.put("Hole", 1.0);
+		BREEDING_BONUS.put("Rain", -2.2);
 	}
 	
-	private Location location;
+	private Field field;
 	
-	/**
-     * Set the animal's location.
-     * @param row The vertical coordinate of the location.
-     * @param col The horizontal coordinate of the location.
-     */
-    public void setLocation(int row, int col)
-    {
-        this.location = new Location(row, col);
-    }
+	//private Location location;
+	
+//	public Enviroment(Field field, Location location)
+//	{
+//		this.field = field;
+//		this.location = location;
+//	}
+	
+
+    
 
 }
 

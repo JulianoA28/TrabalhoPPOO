@@ -3,7 +3,8 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.HashMap;
 
-public class Animal {
+public class Animal extends Actor{
+	
     private static final HashMap<String, Integer> BREEDING_AGE = new HashMap<String, Integer>();
 
     private static final HashMap<String, Integer> MAX_AGE = new HashMap<String, Integer>();
@@ -36,7 +37,7 @@ public class Animal {
 
     private boolean alive;
 
-    private Location location;
+    //private Location location;
 
     public Random getRand() {
         return rand;
@@ -50,9 +51,7 @@ public class Animal {
         return alive;
     }
 
-    public Location getLocation() {
-        return location;
-    }
+
 
     public void setAge(int age) {
         this.age = age;
@@ -114,24 +113,7 @@ public class Animal {
         return alive;
     }
 
-    /**
-     * Set the animal's location.
-     * 
-     * @param row The vertical coordinate of the location.
-     * @param col The horizontal coordinate of the location.
-     */
-    public void setLocation(int row, int col) {
-        this.location = new Location(row, col);
-    }
 
-    /**
-     * Set the animal's location.
-     * 
-     * @param location The animal's location.
-     */
-    public void setLocation(Location location) {
-        this.location = location;
-    }
 
     /**
      * Tell the rabbit that it's dead now :(
