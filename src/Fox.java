@@ -38,12 +38,12 @@ public class Fox extends Animal implements Predator {
      * process, it might breed, die of hunger, or die of old age.
      */
 	@Override
-    public void hunt(Field currentField, Field updatedField, List newPredator) {
+    public void act(Field currentField, Field updatedField, List newPredator) {
         incrementAge();
         incrementHunger();
         if (isAlive()) {
             // New foxes are born into adjacent locations.
-            int births = breed();
+            int births = breed(currentField);
             for (int b = 0; b < births; b++) {
                 Fox newFox = new Fox(false);
                 newPredator.add(newFox);

@@ -116,19 +116,19 @@ public class SimulatorView extends JFrame implements ActionListener {
 				
 				break;
 			case "Lobo":
-				
+				simulator.setWolf();
 				System.out.println("Lobo");
 				break;
 			case "Chuva":
-				
+				simulator.setRain();
 				System.out.println("Chuva");
 				break;
 			case "Plantacao":
-				
+				simulator.setCrop();
 				System.out.println("Plantacao");
 				break;
 			case "Toca":
-				
+				simulator.setHole();
 				System.out.println("Toca");
 				break;
 		}

@@ -7,7 +7,7 @@ import java.util.Random;
  * @author David J. Barnes and Michael Kolling
  * @version 2002-04-11
  */
-public class Rabbit extends Animal implements Prey {
+public class Rabbit extends Animal {
 
     /**
      * Create a new rabbit. A rabbit may be created with age zero (a new born) or
@@ -24,10 +24,10 @@ public class Rabbit extends Animal implements Prey {
      * will breed or die of old age.
      */
 	@Override
-    public void run(Field updatedField, List newRabbits) {
+    public void act(Field currentField, Field updatedField, List newRabbits) {
         incrementAge();
         if (getAlive()) {
-            int births = breed();
+            int births = breed(currentField);
             for (int b = 0; b < births; b++) {
                 Rabbit newRabbit = new Rabbit(false);
                 newRabbits.add(newRabbit);

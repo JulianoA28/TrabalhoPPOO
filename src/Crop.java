@@ -1,8 +1,4 @@
 
 
-public class Crop extends Enviroment {
-	
-	//public Crop();
-
-}
+public class Crop extends Enviroment {}
 

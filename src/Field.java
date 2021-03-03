@@ -29,6 +29,10 @@ public class Field {
         this.width = width;
         field = new Object[depth][width];
     }
+    
+    public Object[][] getField() {
+		return field;
+	}
 
     /**
      * Empty the field.

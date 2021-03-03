@@ -3,7 +3,7 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.HashMap;
 
-public class Animal extends Actor{
+public abstract class Animal extends Actor{
 	
     private static final HashMap<String, Integer> BREEDING_AGE = new HashMap<String, Integer>();
 
@@ -51,8 +51,6 @@ public class Animal extends Actor{
         return alive;
     }
 
-
-
     public void setAge(int age) {
         this.age = age;
     }
@@ -75,6 +73,9 @@ public class Animal extends Actor{
         }
 
     }
+    
+    public abstract void act(Field currentField, Field updatedField, List newAnimals);
+		
 
     /**
      * Increase the age. This could result in the animal's death.
@@ -91,9 +92,25 @@ public class Animal extends Actor{
      * 
      * @return The number of births (may be zero).
      */
-    public int breed() {
+    public int breed(Field currentField) {
+		
+		double breeding_bonus = 0.0;
+		Iterator adjacent = currentField.adjacentLocations(getLocation());
+		Object[][] field = currentField.getField();
+		while (adjacent.hasNext()) {
+			Location next = (Location) adjacent.next();
+			Actor actor = (Actor)field[next.getRow()][next.getCol()];
+			if (actor instanceof Enviroment) {
+				Enviroment env = (Enviroment)actor;
+				breeding_bonus += env.getBonus();
+			}
+		
+		}
+		
         int births = 0;
-        if (canBreed() && rand.nextDouble() <= BREEDING_PROBABILITY.get(this.getClass().getName())) {
+        
+        double breeding_probability = BREEDING_PROBABILITY.get(this.getClass().getName()) + breeding_bonus;
+        if (canBreed() && rand.nextDouble() <= breeding_probability) {
             births = rand.nextInt(MAX_LITTER_SIZE.get(this.getClass().getName())) + 1;
         }
         return births;

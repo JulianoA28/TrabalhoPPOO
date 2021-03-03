@@ -14,12 +14,26 @@ public class Enviroment extends Actor{
 		AREA.put("Hole", 1);
 		AREA.put("Rain", 6);
 		
-		BREEDING_BONUS.put("Crop", 2.0);
-		BREEDING_BONUS.put("Hole", 1.0);
-		BREEDING_BONUS.put("Rain", -2.2);
+		BREEDING_BONUS.put("Crop", 3.0);
+		BREEDING_BONUS.put("Hole", 1.5);
+		BREEDING_BONUS.put("Rain", -4.2);
 	}
 	
 	private Field field;
+	
+	private boolean active;
+	
+	public void setActive(boolean active) {
+        this.active = active;
+    }
+    
+    public double getBonus() {
+		return BREEDING_BONUS.get(this.getClass().getName());
+	}
+    
+    public Enviroment () {
+		
+	}
 	
 	//private Location location;
 	

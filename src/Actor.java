@@ -1,6 +1,6 @@
 
 
-public abstract class Actor {
+public class Actor {
 	
 	private Location location;
 	
