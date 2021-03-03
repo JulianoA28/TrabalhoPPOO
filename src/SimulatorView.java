@@ -31,10 +31,8 @@ public class SimulatorView extends JFrame implements ActionListener {
     private HashMap colors;
     // A statistics object computing and storing simulation information
     private FieldStats stats;
-    
-    private Simulator simulator;
-    
 
+	private Simulator simulator;
     /**
      * Create a view of the given width and height.
      */
@@ -60,6 +58,14 @@ public class SimulatorView extends JFrame implements ActionListener {
 		botaoToca = new JButton("Toca");
 		
 		
+		botaoReiniciar.addActionListener(this);
+		botaoLongSimulator.addActionListener(this);
+		botaoSimulate.addActionListener(this); 
+		botaoLobo.addActionListener(this);
+		botaoChuva.addActionListener(this);
+		botaoPlantacao.addActionListener(this);
+		botaoToca.addActionListener(this);
+		
 		JPanel test = new JPanel();
 		test.setLayout(new BorderLayout(0, 2));
 		test.add(CampoSimulate, BorderLayout.NORTH);
@@ -76,14 +82,6 @@ public class SimulatorView extends JFrame implements ActionListener {
         controls.add(botaoLongSimulator);
         controls.add(botaoReiniciar);
         
-        botaoReiniciar.addActionListener(this);
-		botaoLongSimulator.addActionListener(this);
-		botaoSimulate.addActionListener(this); 
-		botaoLobo.addActionListener(this);
-		botaoChuva.addActionListener(this);
-		botaoPlantacao.addActionListener(this);
-		botaoToca.addActionListener(this);
-        
         JPanel screen = new JPanel();
         screen.setLayout(new BorderLayout());
         screen.add(stepLabel, BorderLayout.NORTH);
@@ -97,39 +95,49 @@ public class SimulatorView extends JFrame implements ActionListener {
         
         pack();
         setVisible(true);
-        
-        
-        
-         
+            
     }
-    
-    public void setSimulator(Simulator simulator) {
-		this.simulator = simulator;
-	}
-    
-    @Override
-    public void actionPerformed(ActionEvent e)
-    {
-		switch(e.getActionCommand()) {
-			case "Reiniciar":
-				System.out.println("Reiniciar");
-				break;
-			case "Lobo":
-				System.out.println("Lobo");
-				break;
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		 switch (e.getActionCommand()) {
 			case "Simulate":
 				int value = Integer.parseInt(CampoSimulate.getText());
-				if (value > 0) {
+				if(value > 0) {
 					simulator.simulate(value);
 				}
+				
 				break;
-		
+			case "Reiniciar":
+				simulator.reset();
+				
+				break;
+			case "Run Long Simulator":
+				simulator.runLongSimulation();
+				
+				break;
+			case "Lobo":
+				
+				System.out.println("Lobo");
+				break;
+			case "Chuva":
+				
+				System.out.println("Chuva");
+				break;
+			case "Plantacao":
+				
+				System.out.println("Plantacao");
+				break;
+			case "Toca":
+				
+				System.out.println("Toca");
+				break;
 		}
-		
 	}
 
-		
 
+	public void setSimulator(Simulator simulator) { 
+		this.simulator = simulator;
+	}
     /**
      * Define a color to be used for a given class of animal.
      */
