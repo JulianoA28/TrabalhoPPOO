@@ -2,6 +2,6 @@ public class Principal {
   public static void main(String[] args) {
     Simulator simulator = new Simulator();
     //simulator.runLongSimulation();
-    //simulator.simulate(10);
+    //simulator.simulate(15000);
   }
 }

@@ -13,7 +13,8 @@ public class Wolf extends Animal implements Predator {
     private int foodLevel;
     // In effect, this is the number of steps a wolf can go before it has to eat
     // again.
-    private static final int FOX_FOOD_VALUE = 6;
+    private static final int FOX_FOOD_VALUE = 7;
+    private static final int RABBIT_FOOD_VALUE = 4;
 
     /**
      * Create a wolf. A wolf can be created as a new born (age zero and not hungry)
@@ -86,15 +87,23 @@ public class Wolf extends Animal implements Predator {
         Iterator adjacentLocations = field.adjacentLocations(location);
         while (adjacentLocations.hasNext()) {
             Location where = (Location) adjacentLocations.next();
-            Object animal = field.getObjectAt(where);
-            if (animal instanceof Fox) {
-                Fox fox = (Fox) animal;
+            Actor actor = (Actor)field.getObjectAt(where);
+            if (actor instanceof Fox) {
+                Fox fox = (Fox) actor;
                 if (fox.isAlive()) {
                     fox.setEaten();
                     foodLevel = FOX_FOOD_VALUE;
                     return where;
                 }
             }
+            else if (actor instanceof Rabbit) {
+				Rabbit rabbit = (Rabbit) actor;
+				if (rabbit.isAlive()) {
+					rabbit.setEaten();
+					foodLevel = RABBIT_FOOD_VALUE;
+					return where;
+				}
+			}
         }
         return null;
     }

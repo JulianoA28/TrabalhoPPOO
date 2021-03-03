@@ -18,19 +18,19 @@ public class Animal extends Actor{
     static {
         BREEDING_AGE.put("Fox", 10);
         BREEDING_AGE.put("Rabbit", 5);
-        BREEDING_AGE.put("Wolf", 15);
+        BREEDING_AGE.put("Wolf", 30);
 
         MAX_AGE.put("Fox", 150);
         MAX_AGE.put("Rabbit", 50);
-        MAX_AGE.put("Wolf", 250);
+        MAX_AGE.put("Wolf", 180);
 
         BREEDING_PROBABILITY.put("Fox", 0.09);
         BREEDING_PROBABILITY.put("Rabbit", 0.15);
-        BREEDING_PROBABILITY.put("Wolf", 0.04);
+        BREEDING_PROBABILITY.put("Wolf", 0.05);
 
         MAX_LITTER_SIZE.put("Fox", 3);
         MAX_LITTER_SIZE.put("Rabbit", 5);
-        MAX_LITTER_SIZE.put("Wolf", 2);
+        MAX_LITTER_SIZE.put("Wolf", 3);
     }
 
     private int age;
