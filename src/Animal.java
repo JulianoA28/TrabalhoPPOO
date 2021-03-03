@@ -3,8 +3,8 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.HashMap;
 
-public abstract class Animal extends Actor{
-	
+public abstract class Animal extends Actor {
+
     private static final HashMap<String, Integer> BREEDING_AGE = new HashMap<String, Integer>();
 
     private static final HashMap<String, Integer> MAX_AGE = new HashMap<String, Integer>();
@@ -37,8 +37,6 @@ public abstract class Animal extends Actor{
 
     private boolean alive;
 
-    //private Location location;
-
     public Random getRand() {
         return rand;
     }
@@ -60,8 +58,7 @@ public abstract class Animal extends Actor{
     }
 
     /**
-     * Create an animal. An animal can be created as a new born (age zero) or with
-     * random age.
+     * Cria um animal. Um animal pode ser criado como recem nascido (idade zero) ou com uma idade aleatoria.
      * 
      * @param randomAge If true, the animal will have random age.
      */
@@ -73,12 +70,11 @@ public abstract class Animal extends Actor{
         }
 
     }
-    
+
     public abstract void act(Field currentField, Field updatedField, List newAnimals);
-		
 
     /**
-     * Increase the age. This could result in the animal's death.
+     * Aumenta a idade. Esse metodo pode resultar na morte do animal.
      */
     public void incrementAge() {
         age++;
@@ -88,27 +84,27 @@ public abstract class Animal extends Actor{
     }
 
     /**
-     * Generate a number representing the number of births, if it can breed.
+     * Gera um numero que representa a quantidade de nascimento, caso o animal tenha idade para procriar.
      * 
-     * @return The number of births (may be zero).
+     * @return O numero de nascimentos (pode ser zero).
      */
     public int breed(Field currentField) {
-		
-		double breeding_bonus = 0.0;
-		Iterator adjacent = currentField.adjacentLocations(getLocation());
-		Object[][] field = currentField.getField();
-		while (adjacent.hasNext()) {
-			Location next = (Location) adjacent.next();
-			Actor actor = (Actor)field[next.getRow()][next.getCol()];
-			if (actor instanceof Enviroment) {
-				Enviroment env = (Enviroment)actor;
-				breeding_bonus += env.getBonus();
-			}
-		
-		}
-		
+
+        double breeding_bonus = 0.0;
+        Iterator adjacent = currentField.adjacentLocations(getLocation());
+        Object[][] field = currentField.getField();
+        while (adjacent.hasNext()) {
+            Location next = (Location) adjacent.next();
+            Actor actor = (Actor) field[next.getRow()][next.getCol()];
+            if (actor instanceof Enviroment) {
+                Enviroment env = (Enviroment) actor;
+                breeding_bonus += env.getBonus();
+            }
+
+        }
+
         int births = 0;
-        
+
         double breeding_probability = BREEDING_PROBABILITY.get(this.getClass().getName()) + breeding_bonus;
         if (canBreed() && rand.nextDouble() <= breeding_probability) {
             births = rand.nextInt(MAX_LITTER_SIZE.get(this.getClass().getName())) + 1;
@@ -117,23 +113,21 @@ public abstract class Animal extends Actor{
     }
 
     /**
-     * A animal can breed if it has reached the breeding age.
+     * Um animal pode procriar caso ele tenha atingindo a idade de procriacao.
      */
     private boolean canBreed() {
         return age >= BREEDING_AGE.get(this.getClass().getName());
     }
 
     /**
-     * Tell the animal that it's dead now :(
+     * Define o animal como morto :(
      */
     public boolean isAlive() {
         return alive;
     }
 
-
-
     /**
-     * Tell the rabbit that it's dead now :(
+     * Define o coelho como morto :(
      */
     public void setEaten() {
         setAlive(false);

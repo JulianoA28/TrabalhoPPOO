@@ -3,43 +3,30 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.HashMap;
 
+public class Enviroment extends Actor {
 
-public class Enviroment extends Actor{
-	
 	private static final HashMap<String, Double> BREEDING_BONUS = new HashMap<String, Double>();
-	
+
 	static {
 		BREEDING_BONUS.put("Crop", 3.0);
 		BREEDING_BONUS.put("Hole", 1.5);
 		BREEDING_BONUS.put("Rain", -4.2);
 	}
-	
+
 	private Field field;
-	
+
 	private boolean active;
-	
+
 	public void setActive(boolean active) {
-        this.active = active;
-    }
-    
-    public double getBonus() {
+		this.active = active;
+	}
+
+	public double getBonus() {
 		return BREEDING_BONUS.get(this.getClass().getName());
 	}
-    
-    public Enviroment () {
-		
-	}
-	
-	//private Location location;
-	
-//	public Enviroment(Field field, Location location)
-//	{
-//		this.field = field;
-//		this.location = location;
-//	}
-	
 
-    
+	public Enviroment() {
+
+	}
 
 }
-

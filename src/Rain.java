@@ -1,4 +1,3 @@
 
-
-public class Rain extends Enviroment{}
-
+public class Rain extends Enviroment {
+}

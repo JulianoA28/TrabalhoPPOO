@@ -1,4 +1,3 @@
 
-
-public class Hole extends Enviroment {}
-
+public class Hole extends Enviroment {
+}

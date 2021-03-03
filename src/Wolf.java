@@ -36,7 +36,7 @@ public class Wolf extends Animal implements Predator {
      * This is what the fox does most of the time: it hunts for rabbits. In the
      * process, it might breed, die of hunger, or die of old age.
      */
-	@Override
+    @Override
     public void act(Field currentField, Field updatedField, List newPredator) {
         incrementAge();
         incrementHunger();
@@ -82,12 +82,12 @@ public class Wolf extends Animal implements Predator {
      * @param location Where in the field it is located.
      * @return Where food was found, or null if it wasn't.
      */
-	@Override
+    @Override
     public Location findFood(Field field, Location location) {
         Iterator adjacentLocations = field.adjacentLocations(location);
         while (adjacentLocations.hasNext()) {
             Location where = (Location) adjacentLocations.next();
-            Actor actor = (Actor)field.getObjectAt(where);
+            Actor actor = (Actor) field.getObjectAt(where);
             if (actor instanceof Fox) {
                 Fox fox = (Fox) actor;
                 if (fox.isAlive()) {
@@ -95,15 +95,14 @@ public class Wolf extends Animal implements Predator {
                     foodLevel = FOX_FOOD_VALUE;
                     return where;
                 }
+            } else if (actor instanceof Rabbit) {
+                Rabbit rabbit = (Rabbit) actor;
+                if (rabbit.isAlive()) {
+                    rabbit.setEaten();
+                    foodLevel = RABBIT_FOOD_VALUE;
+                    return where;
+                }
             }
-            else if (actor instanceof Rabbit) {
-				Rabbit rabbit = (Rabbit) actor;
-				if (rabbit.isAlive()) {
-					rabbit.setEaten();
-					foodLevel = RABBIT_FOOD_VALUE;
-					return where;
-				}
-			}
         }
         return null;
     }

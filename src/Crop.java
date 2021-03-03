@@ -1,4 +1,3 @@
 
-
-public class Crop extends Enviroment {}
-
+public class Crop extends Enviroment {
+}

@@ -1,31 +1,28 @@
-
-
 public class Actor {
-	
-	private Location location;
-	
-	public Location getLocation() {
+
+    private Location location;
+
+    public Location getLocation() {
         return location;
     }
-	
-	/**
-     * Set the animal's location.
-     * @param row The vertical coordinate of the location.
-     * @param col The horizontal coordinate of the location.
+
+    /**
+     * Definir a localizacao do animal.
+     * 
+     * @param row a coordenada vertical da localizacao.
+     * @param col a coodenada horizontal da localizacao.
      */
-    public void setLocation(int row, int col)
-    {
+    public void setLocation(int row, int col) {
         this.location = new Location(row, col);
     }
-    
-	/**
-     * Set the animal's location.
+
+    /**
+     * Definir a localizao do animal.
      * 
-     * @param location The animal's location.
+     * @param location A localizacao do animal.
      */
     public void setLocation(Location location) {
         this.location = location;
     }
-	
-}
 
+}

@@ -26,20 +26,20 @@ public class Simulator {
     private static final double RABBIT_CREATION_PROBABILITY = 0.08;
     // The probability that a wolf will be created in any given grid position.
     private static final double WOLF_CREATION_PROBABILITY = 0.01;
-    
+
     private static final double CROP_CREATION_PROBABILITY = 0.01;
-    
+
     private static final double HOLE_CREATION_PROBABILITY = 0.04;
-    
+
     private static final double RAIN_CREATION_PROBABILITY = 0.03;
 
     // The list of animals in the field
     private List<Animal> animals;
     // The list of animals just born
     private List<Animal> newAnimals;
-    
+
     private List<Enviroment> enviromentList;
-    
+
     private List<Enviroment> newEnviromentList;
 
     // The current state of the field.
@@ -50,13 +50,13 @@ public class Simulator {
     private int step;
     // A graphical view of the simulation.
     private SimulatorView view;
-    
+
     private boolean wolf = false;
-    
+
     private boolean rain = false;
-    
+
     private boolean crop = false;
-    
+
     private boolean hole = false;
 
     /**
@@ -85,7 +85,6 @@ public class Simulator {
         newEnviromentList = new ArrayList<Enviroment>();
         field = new Field(depth, width);
         updatedField = new Field(depth, width);
-        
 
         // Create a view of the state of each location in the field.
         view = new SimulatorView(depth, width);
@@ -97,45 +96,41 @@ public class Simulator {
         view.setColor(Rain.class, Color.cyan);
         view.setColor(Hole.class, Color.pink);
 
-        // Setup a valid starting point.e 
+        // Setup a valid starting point.e
         reset();
     }
-    
+
     public void setWolf() {
-		if (wolf) {
-			wolf = false;
-		}
-		else {
-			wolf = true;
-		}
-	}
-	
-	public void setRain() {
-		if (rain) {
-			rain = false;
-		}
-		else {
-			rain = true;
-		}
-	}
-	
-	public void setCrop() {
-		if (crop) {
-			crop = false;
-		}
-		else {
-			crop = true;
-		}
-	}
-	
-	public void setHole() {
-		if (hole) {
-			hole = false;
-		}
-		else {
-			hole = true;
-		}
-	}
+        if (wolf) {
+            wolf = false;
+        } else {
+            wolf = true;
+        }
+    }
+
+    public void setRain() {
+        if (rain) {
+            rain = false;
+        } else {
+            rain = true;
+        }
+    }
+
+    public void setCrop() {
+        if (crop) {
+            crop = false;
+        } else {
+            crop = true;
+        }
+    }
+
+    public void setHole() {
+        if (hole) {
+            hole = false;
+        } else {
+            hole = true;
+        }
+    }
 
     /**
      * Run the simulation from its current state for a reasonably long period, e.g.
@@ -168,24 +163,22 @@ public class Simulator {
         for (Iterator iter = animals.iterator(); iter.hasNext();) {
             Animal animal = (Animal) iter.next();
             if (animal instanceof Animal) {
-				if (animal.isAlive()) {
-					animal.act(field, updatedField, newAnimals);
-				}
-				else {
-					iter.remove();
-				}
-			}
-			else {
-				System.out.println("found unknown animal");
-			}
+                if (animal.isAlive()) {
+                    animal.act(field, updatedField, newAnimals);
+                } else {
+                    iter.remove();
+                }
+            } else {
+                System.out.println("found unknown animal");
+            }
         }
-			
-		for (Iterator iter = enviromentList.iterator(); iter.hasNext();) {
-			Enviroment enviroment = (Enviroment) iter.next();
-			updatedField.place(enviroment, enviroment.getLocation());
-			
-		}
-			
+
+        for (Iterator iter = enviromentList.iterator(); iter.hasNext();) {
+            Enviroment enviroment = (Enviroment) iter.next();
+            updatedField.place(enviroment, enviroment.getLocation());
+
+        }
+
         // add new born animals to the list of animals
         animals.addAll(newAnimals);
 
@@ -238,21 +231,21 @@ public class Simulator {
                     wolf.setLocation(row, col);
                     field.place(wolf, row, col);
                 } else if (rand.nextDouble() <= CROP_CREATION_PROBABILITY && crop) {
-					Crop crop = new Crop();
-					enviromentList.add(crop);
-					crop.setLocation(row, col);
-					field.place(crop, row, col);
-				} else if (rand.nextDouble() <= RAIN_CREATION_PROBABILITY && rain) {
-					Rain rain = new Rain();
-					enviromentList.add(rain);
-					rain.setLocation(row, col);
-					field.place(rain, row, col);
-				} else if (rand.nextDouble() <= HOLE_CREATION_PROBABILITY && hole) {
-					Hole hole = new Hole();
-					enviromentList.add(hole);
-					hole.setLocation(row, col);
-					field.place(hole, row, col);
-				}
+                    Crop crop = new Crop();
+                    enviromentList.add(crop);
+                    crop.setLocation(row, col);
+                    field.place(crop, row, col);
+                } else if (rand.nextDouble() <= RAIN_CREATION_PROBABILITY && rain) {
+                    Rain rain = new Rain();
+                    enviromentList.add(rain);
+                    rain.setLocation(row, col);
+                    field.place(rain, row, col);
+                } else if (rand.nextDouble() <= HOLE_CREATION_PROBABILITY && hole) {
+                    Hole hole = new Hole();
+                    enviromentList.add(hole);
+                    hole.setLocation(row, col);
+                    field.place(hole, row, col);
+                }
                 // else leave the location empty.
             }
         }
