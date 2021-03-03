@@ -52,10 +52,10 @@ public class SimulatorView extends JFrame implements ActionListener {
 		botaoLongSimulator = new JButton("Run Long Simulator");
 		CampoSimulate = new JTextField(16);
 		botaoSimulate = new JButton("Simulate");
-		botaoLobo = new JButton("Lobo");
-		botaoChuva = new JButton("Chuva");
-		botaoPlantacao = new JButton("Plantacao");
-		botaoToca = new JButton("Toca");
+		botaoLobo = new JButton("Lobo(Cinza)");
+		botaoChuva = new JButton("Chuva(Ciano)");
+		botaoPlantacao = new JButton("Plantacao(Verde)");
+		botaoToca = new JButton("Toca(Rosa)");
 		
 		
 		botaoReiniciar.addActionListener(this);
@@ -115,19 +115,19 @@ public class SimulatorView extends JFrame implements ActionListener {
 				simulator.runLongSimulation();
 				
 				break;
-			case "Lobo":
+			case "Lobo(Cinza)":
 				simulator.setWolf();
 				System.out.println("Lobo");
 				break;
-			case "Chuva":
+			case "Chuva(Ciano)":
 				simulator.setRain();
 				System.out.println("Chuva");
 				break;
-			case "Plantacao":
+			case "Plantacao(Verde)":
 				simulator.setCrop();
 				System.out.println("Plantacao");
 				break;
-			case "Toca":
+			case "Toca(Rosa)":
 				simulator.setHole();
 				System.out.println("Toca");
 				break;

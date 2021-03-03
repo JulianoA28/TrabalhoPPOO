@@ -27,11 +27,11 @@ public class Simulator {
     // The probability that a wolf will be created in any given grid position.
     private static final double WOLF_CREATION_PROBABILITY = 0.01;
     
-    private static final double CROP_CREATION_PROBABILITY = 0.025;
+    private static final double CROP_CREATION_PROBABILITY = 0.01;
     
-    private static final double HOLE_CREATION_PROBABILITY = 0.03;
+    private static final double HOLE_CREATION_PROBABILITY = 0.04;
     
-    private static final double RAIN_CREATION_PROBABILITY = 0.034;
+    private static final double RAIN_CREATION_PROBABILITY = 0.03;
 
     // The list of animals in the field
     private List<Animal> animals;
