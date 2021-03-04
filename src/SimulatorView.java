@@ -23,16 +23,19 @@ public class SimulatorView extends JFrame implements ActionListener {
     private final String POPULATION_PREFIX = "Population: ";
     private JLabel stepLabel, population;
     private FieldView fieldView;
+    // Buttons that are shown in the screen.
     private JButton botaoReiniciar, botaoLongSimulator, botaoSimulate, botaoLobo, botaoChuva, botaoPlantacao, botaoToca;
-	private JTextField CampoSimulate;
-	private JPanel controls;
+    // Text for simulate. 
+    private JTextField CampoSimulate;
+    private JPanel controls;
     private JPanel screen;
     // A map for storing colors for participants in the simulation
     private HashMap colors;
     // A statistics object computing and storing simulation information
     private FieldStats stats;
 
-	private Simulator simulator;
+    private Simulator simulator;
+
     /**
      * Create a view of the given width and height.
      */
@@ -43,37 +46,46 @@ public class SimulatorView extends JFrame implements ActionListener {
         setTitle("Fox and Rabbit Simulation");
         stepLabel = new JLabel(STEP_PREFIX, JLabel.CENTER);
         population = new JLabel(POPULATION_PREFIX, JLabel.CENTER);
-		Container contents = getContentPane();
-		
+        Container contents = getContentPane();
+
         setLocation(100, 50);
 
+		/**
+		 * Creating the buttons.
+		 */
+		
         fieldView = new FieldView(height, width);
-		botaoReiniciar = new JButton("Reiniciar");
-		botaoLongSimulator = new JButton("Run Long Simulator");
-		CampoSimulate = new JTextField(16);
-		botaoSimulate = new JButton("Simulate");
-		botaoLobo = new JButton("Lobo");
-		botaoChuva = new JButton("Chuva");
-		botaoPlantacao = new JButton("Plantacao");
-		botaoToca = new JButton("Toca");
-		
-		
-		botaoReiniciar.addActionListener(this);
-		botaoLongSimulator.addActionListener(this);
-		botaoSimulate.addActionListener(this); 
-		botaoLobo.addActionListener(this);
-		botaoChuva.addActionListener(this);
-		botaoPlantacao.addActionListener(this);
-		botaoToca.addActionListener(this);
-		
-		JPanel test = new JPanel();
-		test.setLayout(new BorderLayout(0, 2));
-		test.add(CampoSimulate, BorderLayout.NORTH);
+        botaoReiniciar = new JButton("Reiniciar");
+        botaoLongSimulator = new JButton("Run Long Simulator");
+        CampoSimulate = new JTextField(16);
+        botaoSimulate = new JButton("Simulate");
+        botaoLobo = new JButton("Lobo(Cinza)");
+        botaoChuva = new JButton("Chuva(Ciano)");
+        botaoPlantacao = new JButton("Plantacao(Verde)");
+        botaoToca = new JButton("Toca(Rosa)");
+
+		/**
+		 * Adding the action listeners.
+		 */
+		 
+        botaoReiniciar.addActionListener(this);
+        botaoLongSimulator.addActionListener(this);
+        botaoSimulate.addActionListener(this);
+        botaoLobo.addActionListener(this);
+        botaoChuva.addActionListener(this);
+        botaoPlantacao.addActionListener(this);
+        botaoToca.addActionListener(this);
+
+		// Using BorderLayout to adjust the layout
+        JPanel test = new JPanel();
+        test.setLayout(new BorderLayout(0, 2));
+        test.add(CampoSimulate, BorderLayout.NORTH);
         test.add(botaoSimulate, BorderLayout.SOUTH);
-		
-		controls = new JPanel();
+
+        controls = new JPanel();
         controls.setLayout(new FlowLayout());
         
+		// Adding the buttons to screen
         controls.add(botaoLobo);
         controls.add(botaoChuva);
         controls.add(botaoPlantacao);
@@ -81,82 +93,85 @@ public class SimulatorView extends JFrame implements ActionListener {
         controls.add(test);
         controls.add(botaoLongSimulator);
         controls.add(botaoReiniciar);
-        
-        
-      
-        
+
+		// Setting the layouts
         JPanel screen = new JPanel();
         screen.setLayout(new BorderLayout());
         screen.add(stepLabel, BorderLayout.NORTH);
         screen.add(fieldView, BorderLayout.CENTER);
         screen.add(population, BorderLayout.SOUTH);
-        
-       
+
         contents.add(screen, BorderLayout.CENTER);
         contents.add(controls, BorderLayout.SOUTH);
-        
-        
+
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        
+
         pack();
         setVisible(true);
-        
-        
-         
+
     }
-	@Override
-	public void actionPerformed(ActionEvent e) {
-		 switch (e.getActionCommand()) {
-			case "Simulate":
-				int value = Integer.parseInt(CampoSimulate.getText());
-				if(value > 0) {
-					simulator.simulate(value);
-				}
-				
-				break;
-			case "Reiniciar":
-				simulator.reset();
-				
-				break;
-			case "Run Long Simulator":
-				simulator.runLongSimulation();
-				
-				break;
-			case "Lobo":
-				
-				System.out.println("Lobo");
-				break;
-			case "Chuva":
-				
-				System.out.println("Chuva");
-				break;
-			case "Plantacao":
-				
-				System.out.println("Plantacao");
-				break;
-			case "Toca":
-				
-				System.out.println("Toca");
-				break;
-		}
-	}
+    
+	/**
+	* Action Performed method thats implements the button action .
+	*/
+	
+    @Override
+    public void actionPerformed(ActionEvent e) {
+		// getting wich button is pressed
+        switch (e.getActionCommand()) {
+            case "Simulate":
+                int value = Integer.parseInt(CampoSimulate.getText());
+                if (value > 0) {
+                    simulator.simulate(value);
+                }
 
+                break;
+            case "Reiniciar":
+                simulator.reset();
 
-	public void setSimulator(Simulator simulator) { 
-		this.simulator = simulator;
-	}
+                break;
+            case "Run Long Simulator":
+                simulator.runLongSimulation();
+
+                break;
+            case "Lobo(Cinza)":
+                simulator.setWolf();
+                System.out.println("Lobo");
+                break;
+            case "Chuva(Ciano)":
+                simulator.setRain();
+                System.out.println("Chuva");
+                break;
+            case "Plantacao(Verde)":
+                simulator.setCrop();
+                System.out.println("Plantacao");
+                break;
+            case "Toca(Rosa)":
+                simulator.setHole();
+                System.out.println("Toca");
+                break;
+        }
+    }
+    
+    /**
+     * Method to use actions related to simulator.
+     */
+    public void setSimulator(Simulator simulator) {
+        this.simulator = simulator;
+    }
+
     /**
      * Define a color to be used for a given class of animal.
      */
-    public void setColor(Class animalClass, Color color) {
-        colors.put(animalClass, color);
+    public void setColor(Class actorClass, Color color) {
+        colors.put(actorClass, color);
     }
 
     /**
      * Define a color to be used for a given class of animal.
      */
-    private Color getColor(Class animalClass) {
-        Color col = (Color) colors.get(animalClass);
+    private Color getColor(Class actorClass) {
+        Color col = (Color) colors.get(actorClass);
         if (col == null) {
             // no color defined for this class
             return UNKNOWN_COLOR;
