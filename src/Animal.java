@@ -3,18 +3,24 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.HashMap;
 
+/**
+ * Classe responsável por definir a localizacaos dos atores dentro do sistema.
+ * 
+ * @author Amanda Cassiano Leal
+ */
 public abstract class Animal extends Actor {
-
+    // Idade que o animal pode procriar.
     private static final HashMap<String, Integer> BREEDING_AGE = new HashMap<String, Integer>();
-
+    // Idade maxima que um animal pode viver
     private static final HashMap<String, Integer> MAX_AGE = new HashMap<String, Integer>();
-
+    // A probabilidade de um animal se reproduzir
     private static final HashMap<String, Double> BREEDING_PROBABILITY = new HashMap<String, Double>();
-
+    // O maximo de numero de nascimentos
     private static final HashMap<String, Integer> MAX_LITTER_SIZE = new HashMap<String, Integer>();
 
     private static final Random rand = new Random();
 
+    // Mapeamento dos atributos atraves de um par chave, valor
     static {
         BREEDING_AGE.put("Fox", 10);
         BREEDING_AGE.put("Rabbit", 5);
@@ -37,30 +43,52 @@ public abstract class Animal extends Actor {
 
     private boolean alive;
 
+    // gera um numero aleatorio
     public Random getRand() {
         return rand;
     }
 
+    /**
+     * Busca a idade do animal.
+     * 
+     * @return a idade do animal.
+     */
     public int getAge() {
         return age;
     }
 
+    /**
+     * Busca se o animal está vivo ou morto.
+     * 
+     * @return true ou false.
+     */
     public boolean getAlive() {
         return alive;
     }
 
+    /**
+     * Define a idade do animal
+     * 
+     * @param age uma idade, e.g 2
+     */
     public void setAge(int age) {
         this.age = age;
     }
 
+    /**
+     * Define se o animal está vivo ou morto.
+     * 
+     * @param alive se true o animal estara vivo
+     */
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
 
     /**
-     * Cria um animal. Um animal pode ser criado como recem nascido (idade zero) ou com uma idade aleatoria.
+     * Cria um animal. Um animal pode ser criado como recem nascido (idade zero) ou
+     * com uma idade aleatoria.
      * 
-     * @param randomAge If true, the animal will have random age.
+     * @param randomAge se true, o animal tera uma idade aleatoria.
      */
     public Animal(boolean randomAge) {
         age = 0;
@@ -71,6 +99,14 @@ public abstract class Animal extends Actor {
 
     }
 
+    /**
+     * Responsavel pela acao que o animal devera fazer (run ou hunt), metodo
+     * abstrato.
+     * 
+     * @param currentField o campo atual que a simulacao esta acontecendo.
+     * @param updatedField o campo que devera ser atualizado.
+     * @param newAnimals   a lista dos novos animais que farao parte da simulacao.
+     */
     public abstract void act(Field currentField, Field updatedField, List newAnimals);
 
     /**
@@ -84,8 +120,10 @@ public abstract class Animal extends Actor {
     }
 
     /**
-     * Gera um numero que representa a quantidade de nascimento, caso o animal tenha idade para procriar.
+     * Gera um numero que representa a quantidade de nascimento, caso o animal tenha
+     * idade para procriar.
      * 
+     * @param currentField o campo atual que a simulacao esta rodando.
      * @return O numero de nascimentos (pode ser zero).
      */
     public int breed(Field currentField) {
@@ -114,20 +152,24 @@ public abstract class Animal extends Actor {
 
     /**
      * Um animal pode procriar caso ele tenha atingindo a idade de procriacao.
+     * 
+     * @return a idade de pocriação do animal em questão.
      */
     private boolean canBreed() {
         return age >= BREEDING_AGE.get(this.getClass().getName());
     }
 
     /**
-     * Define o animal como morto :(
+     * Define o animal como morto ou vivo
+     * 
+     * @return true ou false.
      */
     public boolean isAlive() {
         return alive;
     }
 
     /**
-     * Define o coelho como morto :(
+     * Define o animal como morto
      */
     public void setEaten() {
         setAlive(false);
