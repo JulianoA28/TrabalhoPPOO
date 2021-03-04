@@ -72,7 +72,6 @@ public class Wolf extends Animal implements Predator {
     /**
      * Aumenta a fome do lobo. Isso pode resultar em sua morte.
      */
-    @Override
     private void incrementHunger() {
         foodLevel--;
         if (foodLevel <= 0) {
