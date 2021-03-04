@@ -69,6 +69,7 @@ public class Fox extends Animal implements Predator {
     /**
      * Make this fox more hungry. This could result in the fox's death.
      */
+    @Override
     private void incrementHunger() {
         foodLevel--;
         if (foodLevel <= 0) {
