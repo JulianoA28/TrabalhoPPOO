@@ -1,27 +1,29 @@
 import java.util.List;
 import java.util.Iterator;
-//import java.util.Random;
+import java.util.Random;
 
 /**
- * A simple model of a fox. Foxes age, move, eat rabbits, and die.
+ * Um modelo simples de Raposa. Raposas envelhecem, comem coelhos e
+ * morrem.
  * 
- * @author David J. Barnes and Michael Kolling
- * @version 2002-04-11
+ * @author Juliano Andrade
  */
 public class Fox extends Animal implements Predator {
 
-    // The food value of a single rabbit. In effect, this is the
-    // number of steps a fox can go before it has to eat again.
+    // O valor em comida de um unico coelho. Em efeito, isso e o numero
+    // de estapas que uma raposa consegue sobreviver sem ter que se
+    // alimentar novamente
     private static final int RABBIT_FOOD_VALUE = 4;
 
-    // The fox's food level, which is increased by eating rabbits.
+    // O nivel de comida da raposa, que e aumentado ao comer coelhos.
     private int foodLevel;
 
     /**
-     * Create a fox. A fox can be created as a new born (age zero and not hungry) or
-     * with random age.
+     * Cria-se uma raposa. A raposa e criada como recem-nascida (idade 0
+     * e sem fome) ou com uma idade aleatoria
      * 
-     * @param randomAge If true, the fox will have random age and hunger level.
+     * @param randomAge Se verdadeiro, a raposa tera uma idade e um 
+     * nivel de fome aleatorios
      */
     public Fox(boolean randomAge) {
         super(randomAge);
@@ -34,15 +36,17 @@ public class Fox extends Animal implements Predator {
     }
 
     /**
-     * This is what the fox does most of the time: it hunts for rabbits. In the
-     * process, it might breed, die of hunger, or die of old age.
+     * Isso e o que a raposa faz a maior parte do seu tempo. Ela caca
+     * coelhos. No processo, ela pode se reproduzir, morrer de fome ou
+     * morrer de velhice.
      */
-    public void hunt(Field currentField, Field updatedField, List newPredator) {
+	@Override
+    public void act(Field currentField, Field updatedField, List newPredator) {
         incrementAge();
         incrementHunger();
         if (isAlive()) {
             // New foxes are born into adjacent locations.
-            int births = breed();
+            int births = breed(currentField);
             for (int b = 0; b < births; b++) {
                 Fox newFox = new Fox(false);
                 newPredator.add(newFox);
@@ -66,8 +70,9 @@ public class Fox extends Animal implements Predator {
     }
 
     /**
-     * Make this fox more hungry. This could result in the fox's death.
+     * Faz a raposa ter mais fome. Isso pode resultar na morte dela.
      */
+    @Override
     private void incrementHunger() {
         foodLevel--;
         if (foodLevel <= 0) {
@@ -76,12 +81,14 @@ public class Fox extends Animal implements Predator {
     }
 
     /**
-     * Tell the fox to look for rabbits adjacent to its current location.
+     * Indica para a raposa para buscar por coelhos adjacentes de sua
+     * localizacao atual.
      * 
-     * @param field    The field in which it must look.
-     * @param location Where in the field it is located.
-     * @return Where food was found, or null if it wasn't.
+     * @param field O campo que ela procurar
+     * @param location Aonde o campo esta localizados
+     * @return Aonde a comida foi encontrada, ou null se nao ha
      */
+	@Override
     public Location findFood(Field field, Location location) {
         Iterator adjacentLocations = field.adjacentLocations(location);
         while (adjacentLocations.hasNext()) {

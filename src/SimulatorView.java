@@ -53,7 +53,6 @@ public class SimulatorView extends JFrame implements ActionListener {
 		/**
 		 * Creating the buttons.
 		 */
-		
         fieldView = new FieldView(height, width);
         botaoReiniciar = new JButton("Reiniciar");
         botaoLongSimulator = new JButton("Run Long Simulator");
@@ -63,11 +62,9 @@ public class SimulatorView extends JFrame implements ActionListener {
         botaoChuva = new JButton("Chuva(Ciano)");
         botaoPlantacao = new JButton("Plantacao(Verde)");
         botaoToca = new JButton("Toca(Rosa)");
-
 		/**
 		 * Adding the action listeners.
 		 */
-		 
         botaoReiniciar.addActionListener(this);
         botaoLongSimulator.addActionListener(this);
         botaoSimulate.addActionListener(this);
@@ -75,8 +72,9 @@ public class SimulatorView extends JFrame implements ActionListener {
         botaoChuva.addActionListener(this);
         botaoPlantacao.addActionListener(this);
         botaoToca.addActionListener(this);
-
+      
 		// Using BorderLayout to adjust the layout
+
         JPanel test = new JPanel();
         test.setLayout(new BorderLayout(0, 2));
         test.add(CampoSimulate, BorderLayout.NORTH);
@@ -86,6 +84,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         controls.setLayout(new FlowLayout());
         
 		// Adding the buttons to screen
+
         controls.add(botaoLobo);
         controls.add(botaoChuva);
         controls.add(botaoPlantacao);
@@ -95,6 +94,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         controls.add(botaoReiniciar);
 
 		// Setting the layouts
+
         JPanel screen = new JPanel();
         screen.setLayout(new BorderLayout());
         screen.add(stepLabel, BorderLayout.NORTH);
@@ -110,7 +110,6 @@ public class SimulatorView extends JFrame implements ActionListener {
         setVisible(true);
 
     }
-    
 	/**
 	* Action Performed method thats implements the button action .
 	*/
@@ -118,6 +117,8 @@ public class SimulatorView extends JFrame implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
 		// getting wich button is pressed
+
+
         switch (e.getActionCommand()) {
             case "Simulate":
                 int value = Integer.parseInt(CampoSimulate.getText());
@@ -156,6 +157,7 @@ public class SimulatorView extends JFrame implements ActionListener {
     /**
      * Method to use actions related to simulator.
      */
+
     public void setSimulator(Simulator simulator) {
         this.simulator = simulator;
     }

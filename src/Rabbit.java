@@ -1,32 +1,32 @@
 import java.util.List;
-//import java.util.Random;
+import java.util.Random;
 
 /**
- * A simple model of a rabbit. Rabbits age, move, breed, and die.
+ * Um modelo simples de  coelho. Coelhos envelhecem, se movimentam, se reproduzem e morrem. 
  * 
- * @author David J. Barnes and Michael Kolling
- * @version 2002-04-11
+ * @author Leonardo Basso
  */
 public class Rabbit extends Animal {
 
     /**
-     * Create a new rabbit. A rabbit may be created with age zero (a new born) or
-     * with a random age.
+     * Cria um novo coelho. Um coelho pode ser criado com a idade zero(recém nascido) ou com uma idade aleatória.
      * 
-     * @param randomAge If true, the rabbit will have a random age.
+     * 
+     * @param randomAge Caso verdadeiro, o coelho terá uma idade aleatória.
      */
     public Rabbit(boolean randomAge) {
         super(randomAge);
     }
 
     /**
-     * This is what the rabbit does most of the time - it runs around. Sometimes it
-     * will breed or die of old age.
+     * Isso é o que os coelhos fazem na maior parte do tempo - eles correm por aí. As vezes eles reproduzem ou morrem de velhice.
+     * 
      */
-    public void run(Field updatedField, List newRabbits) {
+	@Override
+    public void act(Field currentField, Field updatedField, List newRabbits) {
         incrementAge();
         if (getAlive()) {
-            int births = breed();
+            int births = breed(currentField);
             for (int b = 0; b < births; b++) {
                 Rabbit newRabbit = new Rabbit(false);
                 newRabbits.add(newRabbit);
@@ -35,12 +35,12 @@ public class Rabbit extends Animal {
                 updatedField.place(newRabbit, loc);
             }
             Location newLocation = updatedField.freeAdjacentLocation(getLocation());
-            // Only transfer to the updated field if there was a free location
+            // Apenas transfere para um campo atualizado se houver um local livre
             if (newLocation != null) {
                 setLocation(newLocation);
                 updatedField.place(this, newLocation);
             } else {
-                // can neither move nor stay - overcrowding - all locations taken
+                // não pode se mover nem ficar - caso haja superlotação - todos os locais cheios
                 setAlive(false);
             }
         }

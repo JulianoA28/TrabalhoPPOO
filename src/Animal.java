@@ -1,9 +1,10 @@
-//import java.util.List;
-//import java.util.Iterator;
+import java.util.List;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.HashMap;
 
-public class Animal {
+public abstract class Animal extends Actor {
+
     private static final HashMap<String, Integer> BREEDING_AGE = new HashMap<String, Integer>();
 
     private static final HashMap<String, Integer> MAX_AGE = new HashMap<String, Integer>();
@@ -17,15 +18,15 @@ public class Animal {
     static {
         BREEDING_AGE.put("Fox", 10);
         BREEDING_AGE.put("Rabbit", 5);
-        BREEDING_AGE.put("Wolf", 15);
+        BREEDING_AGE.put("Wolf", 50);
 
         MAX_AGE.put("Fox", 150);
         MAX_AGE.put("Rabbit", 50);
-        MAX_AGE.put("Wolf", 250);
+        MAX_AGE.put("Wolf", 180);
 
         BREEDING_PROBABILITY.put("Fox", 0.09);
         BREEDING_PROBABILITY.put("Rabbit", 0.15);
-        BREEDING_PROBABILITY.put("Wolf", 0.04);
+        BREEDING_PROBABILITY.put("Wolf", 0.035);
 
         MAX_LITTER_SIZE.put("Fox", 3);
         MAX_LITTER_SIZE.put("Rabbit", 5);
@@ -35,8 +36,6 @@ public class Animal {
     private int age;
 
     private boolean alive;
-
-    private Location location;
 
     public Random getRand() {
         return rand;
@@ -50,10 +49,6 @@ public class Animal {
         return alive;
     }
 
-    public Location getLocation() {
-        return location;
-    }
-
     public void setAge(int age) {
         this.age = age;
     }
@@ -63,8 +58,7 @@ public class Animal {
     }
 
     /**
-     * Create an animal. An animal can be created as a new born (age zero) or with
-     * random age.
+     * Cria um animal. Um animal pode ser criado como recem nascido (idade zero) ou com uma idade aleatoria.
      * 
      * @param randomAge If true, the animal will have random age.
      */
@@ -77,8 +71,10 @@ public class Animal {
 
     }
 
+    public abstract void act(Field currentField, Field updatedField, List newAnimals);
+
     /**
-     * Increase the age. This could result in the animal's death.
+     * Aumenta a idade. Esse metodo pode resultar na morte do animal.
      */
     public void incrementAge() {
         age++;
@@ -88,53 +84,50 @@ public class Animal {
     }
 
     /**
-     * Generate a number representing the number of births, if it can breed.
+     * Gera um numero que representa a quantidade de nascimento, caso o animal tenha idade para procriar.
      * 
-     * @return The number of births (may be zero).
+     * @return O numero de nascimentos (pode ser zero).
      */
-    public int breed() {
+    public int breed(Field currentField) {
+
+        double breeding_bonus = 0.0;
+        Iterator adjacent = currentField.adjacentLocations(getLocation());
+        Object[][] field = currentField.getField();
+        while (adjacent.hasNext()) {
+            Location next = (Location) adjacent.next();
+            Actor actor = (Actor) field[next.getRow()][next.getCol()];
+            if (actor instanceof Enviroment) {
+                Enviroment env = (Enviroment) actor;
+                breeding_bonus += env.getBonus();
+            }
+
+        }
+
         int births = 0;
-        if (canBreed() && rand.nextDouble() <= BREEDING_PROBABILITY.get(this.getClass().getName())) {
+
+        double breeding_probability = BREEDING_PROBABILITY.get(this.getClass().getName()) + breeding_bonus;
+        if (canBreed() && rand.nextDouble() <= breeding_probability) {
             births = rand.nextInt(MAX_LITTER_SIZE.get(this.getClass().getName())) + 1;
         }
         return births;
     }
 
     /**
-     * A animal can breed if it has reached the breeding age.
+     * Um animal pode procriar caso ele tenha atingindo a idade de procriacao.
      */
     private boolean canBreed() {
         return age >= BREEDING_AGE.get(this.getClass().getName());
     }
 
     /**
-     * Tell the animal that it's dead now :(
+     * Define o animal como morto :(
      */
     public boolean isAlive() {
         return alive;
     }
 
     /**
-     * Set the animal's location.
-     * 
-     * @param row The vertical coordinate of the location.
-     * @param col The horizontal coordinate of the location.
-     */
-    public void setLocation(int row, int col) {
-        this.location = new Location(row, col);
-    }
-
-    /**
-     * Set the animal's location.
-     * 
-     * @param location The animal's location.
-     */
-    public void setLocation(Location location) {
-        this.location = location;
-    }
-
-    /**
-     * Tell the rabbit that it's dead now :(
+     * Define o coelho como morto :(
      */
     public void setEaten() {
         setAlive(false);

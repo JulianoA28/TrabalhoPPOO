@@ -1,7 +1,13 @@
+
+/**
+ * Classe Principal responsavel por iniciar a GUI do simulador
+ * 
+ * @author Juliano Andrade
+ */
 public class Principal {
-  public static void main(String[] args) {
-    Simulator simulator = new Simulator();
-   // simulator.runLongSimulation();
-    //simulator.simulate(50000);
+	public static void main(String[] args) {
+		Simulator simulator = new Simulator();
+  
   }
+  
 }
