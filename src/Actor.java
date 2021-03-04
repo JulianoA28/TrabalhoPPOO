@@ -1,3 +1,8 @@
+/**
+ * Classe responsável por definir a localizacaos dos atores dentro do sistema.
+ * 
+ * @author Amanda Cassiano Leal
+ */
 public class Actor {
 
     private Location location;
