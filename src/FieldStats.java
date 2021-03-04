@@ -3,31 +3,33 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 /**
- * This class collects and provides some statistical data on the state of a
- * field. It is flexible: it will create and maintain a counter for any class of
- * object that is found within the field.
- * 
- * @author David J. Barnes and Michael Kolling
- * @version 2002-04-23
+ * Classe coleta e providencia dados estatisticos sobre o estado do
+ * campo. E flexivel: ira criar e mantem um contador para qualquer
+ * classe de objeto que pode ser encontrado dentro do campo.
+
+ * @author Juliano Andrade
+
  */
 public class FieldStats {
-    // Counters for each type of entity (fox, rabbit, etc.) in the simulation.
+	
+    // Contadores para cada tioi de entidade (atores) na simulacao
     private HashMap counters;
-    // Whether the counters are currently up to date.
+
+    // Se os contadores estao atualmente atualizados
     private boolean countsValid;
 
     /**
-     * Construct a field-statistics object.
+     * Constroi um objeto de estatisticas de campo
      */
     public FieldStats() {
-        // Set up a collection for counters for each type of animal that
-        // we might find
+        // Inicia uma colecao de contadores para cada tipo de animal que
+        // podemos encontrar
         counters = new HashMap();
         countsValid = true;
     }
 
     /**
-     * @return A string describing what animals are in the field.
+     * @return Uma string descrevendo quais animais estao no campo
      */
     public String getPopulationDetails(Field field) {
         StringBuffer buffer = new StringBuffer();
@@ -46,7 +48,8 @@ public class FieldStats {
     }
 
     /**
-     * Invalidate the current set of statistics; reset all counts to zero.
+     * Invalida o conjunto atuais de estatisticas; reseta todos
+     * contadores para zero
      */
     public void reset() {
         countsValid = false;
@@ -58,7 +61,7 @@ public class FieldStats {
     }
 
     /**
-     * Increment the count for one class of animal.
+     * Incrementa o contador para uma classe animal
      */
     public void incrementCount(Class animalClass) {
         Counter cnt = (Counter) counters.get(animalClass);
@@ -71,20 +74,19 @@ public class FieldStats {
     }
 
     /**
-     * Indicate that an animal count has been completed.
+     * Indica que um contador animal foi completado.
      */
     public void countFinished() {
         countsValid = true;
     }
 
     /**
-     * Determine whether the simulation is still viable. I.e., should it continue to
-     * run.
-     * 
-     * @return true If there is more than one species alive.
+     * Determina se a simulacao e ainda viavel. Em outras
+     * palavras, deveria continuar rodando.
+     * @return true Se ha mais de uma especie viva.
      */
     public boolean isViable(Field field) {
-        // How many counts are non-zero.
+        // Quantos contadores nao sao zero
         int nonZero = 0;
         if (!countsValid) {
             generateCounts(field);
@@ -100,9 +102,9 @@ public class FieldStats {
     }
 
     /**
-     * Generate counts of the number of foxes and rabbits. These are not kept up to
-     * date as foxes and rabbits are placed in the field, but only when a request is
-     * made for the information.
+     * Gera contadores do numero de animais. Nao sao mantidos
+     * atualizados a medida que os animais sao posicionados no campo,
+     * mas apenas quando uma requisicao de informacao e feita.
      */
     private void generateCounts(Field field) {
         reset();
