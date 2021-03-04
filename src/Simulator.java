@@ -209,7 +209,8 @@ public class Simulator {
     }
 
     /**
-     * Povoe o campo com raposas e coelhos.
+     * Povoe o campo com raposas e coelhos. Caso os atributos relacionados aos
+     * atores estejam verdadeiros tambem adiciona lobos, plantacoes, chuvas e tocas.
      */
     private void populate(Field field) {
         Random rand = new Random();
