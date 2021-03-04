@@ -4,40 +4,39 @@ import javax.swing.*;
 import java.util.HashMap;
 
 /**
- * A graphical view of the simulation grid. The view displays a colored
- * rectangle for each location representing its contents. It uses a default
- * background color. Colors for each type of species can be defined using the
- * setColor method.
+ * Uma visão gráfica da grade de simulação. A vista mostra um colorido retângulo
+ * para cada local que representa seu conteúdo. Ele usa um padrão cor de fundo.
+ * As cores para cada tipo de espécie podem ser definidas usando o método
+ * setColor.
  * 
- * @author David J. Barnes and Michael Kolling
- * @version 2002-04-23
+ * @author Joao Veronezi
  */
 public class SimulatorView extends JFrame implements ActionListener {
-    // Colors used for empty locations.
+    // Cores usadas para os espacos em branco.
     private static final Color EMPTY_COLOR = Color.white;
 
-    // Color used for objects that have no defined color.
+    // Cor usada para objetos que não tem cor definida.
     private static final Color UNKNOWN_COLOR = Color.gray;
 
     private final String STEP_PREFIX = "Step: ";
     private final String POPULATION_PREFIX = "Population: ";
     private JLabel stepLabel, population;
     private FieldView fieldView;
-    // Buttons that are shown in the screen.
+    // Botoes que estao sendo mostrados na janela.
     private JButton botaoReiniciar, botaoLongSimulator, botaoSimulate, botaoLobo, botaoChuva, botaoPlantacao, botaoToca;
-    // Text for simulate. 
+    // Texto para o simulador.
     private JTextField CampoSimulate;
     private JPanel controls;
     private JPanel screen;
-    // A map for storing colors for participants in the simulation
+    // Um mapa para armazenar cores para os participantes da simulação
     private HashMap colors;
-    // A statistics object computing and storing simulation information
+    // Um objeto estatístico computando e armazenando informações de simulação
     private FieldStats stats;
 
     private Simulator simulator;
 
     /**
-     * Create a view of the given width and height.
+     * Cria uma visão da largura e altura fornecidas.
      */
     public SimulatorView(int height, int width) {
         stats = new FieldStats();
@@ -50,9 +49,9 @@ public class SimulatorView extends JFrame implements ActionListener {
 
         setLocation(100, 50);
 
-		/**
-		 * Creating the buttons.
-		 */
+        /**
+         * Criando os botoes.
+         */
         fieldView = new FieldView(height, width);
         botaoReiniciar = new JButton("Reiniciar");
         botaoLongSimulator = new JButton("Run Long Simulator");
@@ -62,9 +61,9 @@ public class SimulatorView extends JFrame implements ActionListener {
         botaoChuva = new JButton("Chuva(Ciano)");
         botaoPlantacao = new JButton("Plantacao(Verde)");
         botaoToca = new JButton("Toca(Rosa)");
-		/**
-		 * Adding the action listeners.
-		 */
+        /**
+         * Adicionando os action listeners.
+         */
         botaoReiniciar.addActionListener(this);
         botaoLongSimulator.addActionListener(this);
         botaoSimulate.addActionListener(this);
@@ -72,8 +71,8 @@ public class SimulatorView extends JFrame implements ActionListener {
         botaoChuva.addActionListener(this);
         botaoPlantacao.addActionListener(this);
         botaoToca.addActionListener(this);
-      
-		// Using BorderLayout to adjust the layout
+
+        // Utilizando BorderLayout para ajustar o layout
 
         JPanel test = new JPanel();
         test.setLayout(new BorderLayout(0, 2));
@@ -82,8 +81,8 @@ public class SimulatorView extends JFrame implements ActionListener {
 
         controls = new JPanel();
         controls.setLayout(new FlowLayout());
-        
-		// Adding the buttons to screen
+
+        // Adicionando os botoes na tela
 
         controls.add(botaoLobo);
         controls.add(botaoChuva);
@@ -93,7 +92,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         controls.add(botaoLongSimulator);
         controls.add(botaoReiniciar);
 
-		// Setting the layouts
+        // Ajustando os layouts 
 
         JPanel screen = new JPanel();
         screen.setLayout(new BorderLayout());
@@ -110,14 +109,14 @@ public class SimulatorView extends JFrame implements ActionListener {
         setVisible(true);
 
     }
-	/**
-	* Action Performed method thats implements the button action .
-	*/
-	
+
+    /**
+     * O metodo Action Performed implementa a ação do botão.
+     */
+
     @Override
     public void actionPerformed(ActionEvent e) {
-		// getting wich button is pressed
-
+        // pegando qual botao foi pressinoado
 
         switch (e.getActionCommand()) {
             case "Simulate":
@@ -137,25 +136,25 @@ public class SimulatorView extends JFrame implements ActionListener {
                 break;
             case "Lobo(Cinza)":
                 simulator.setWolf();
-                System.out.println("Lobo");
+                System.out.println("Voce adicionou ou retirou Lobos na sua simulacao");
                 break;
             case "Chuva(Ciano)":
                 simulator.setRain();
-                System.out.println("Chuva");
+                System.out.println("Voce adicionou ou retirou Chuva na sua simulacao");
                 break;
             case "Plantacao(Verde)":
                 simulator.setCrop();
-                System.out.println("Plantacao");
+                System.out.println("Voce adicionou ou retirou Plantacao na sua simulacao");
                 break;
             case "Toca(Rosa)":
                 simulator.setHole();
-                System.out.println("Toca");
+                System.out.println("Voce adicionou ou retirou Toca na sua simulacao");
                 break;
         }
     }
-    
+
     /**
-     * Method to use actions related to simulator.
+     * Método para usar ações relacionadas ao simulador.
      */
 
     public void setSimulator(Simulator simulator) {
@@ -163,14 +162,14 @@ public class SimulatorView extends JFrame implements ActionListener {
     }
 
     /**
-     * Define a color to be used for a given class of animal.
+     * Defina uma cor a ser usada para uma determinada classe de animal.
      */
     public void setColor(Class actorClass, Color color) {
         colors.put(actorClass, color);
     }
 
     /**
-     * Define a color to be used for a given class of animal.
+     * Defina uma cor a ser usada para uma determinada classe de animal.
      */
     private Color getColor(Class actorClass) {
         Color col = (Color) colors.get(actorClass);
@@ -183,10 +182,10 @@ public class SimulatorView extends JFrame implements ActionListener {
     }
 
     /**
-     * Show the current status of the field.
+     * Mostra o estado atual do campo.
      * 
-     * @param step  Which iteration step it is.
-     * @param stats Status of the field to be represented.
+     * @param step  Em qual interacao esta.
+     * @param stats Estado do campo a ser representado.
      */
     public void showStatus(int step, Field field) {
         if (!isVisible())
@@ -215,19 +214,19 @@ public class SimulatorView extends JFrame implements ActionListener {
     }
 
     /**
-     * Determine whether the simulation should continue to run.
+     * Determina se a simulação deve continuar a ser executada.
      * 
-     * @return true If there is more than one species alive.
+     * @return true Se houver mais de uma espécie viva.
      */
     public boolean isViable(Field field) {
         return stats.isViable(field);
     }
 
     /**
-     * Provide a graphical view of a rectangular field. This is a nested class (a
-     * class defined inside a class) which defines a custom component for the user
-     * interface. This component displays the field. This is rather advanced GUI
-     * stuff - you can ignore this for your project if you like.
+     * Fornece uma visão gráfica de um campo retangular. Esta é uma classe aninhada
+     * (um classe definida dentro de uma classe) que define um componente
+     * personalizado para o usuário interface. Este componente exibe o campo. Esta é
+     * uma GUI bastante avançada
      */
     private class FieldView extends JPanel {
         private final int GRID_VIEW_SCALING_FACTOR = 6;
@@ -239,7 +238,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         private Image fieldImage;
 
         /**
-         * Create a new FieldView component.
+         * Crie um novo componente FieldView.
          */
         public FieldView(int height, int width) {
             gridHeight = height;
@@ -248,15 +247,16 @@ public class SimulatorView extends JFrame implements ActionListener {
         }
 
         /**
-         * Tell the GUI manager how big we would like to be.
+         * Diga ao gerente da GUI o quão grande gostaríamos de ser.
          */
         public Dimension getPreferredSize() {
             return new Dimension(gridWidth * GRID_VIEW_SCALING_FACTOR, gridHeight * GRID_VIEW_SCALING_FACTOR);
         }
 
         /**
-         * Prepare for a new round of painting. Since the component may be resized,
-         * compute the scaling factor again.
+         * 
+         * Prepare-se para uma nova rodada de pintura. Como o componente pode ser
+         * redimensionado, calcule o fator de escala novamente.
          */
         public void preparePaint() {
             if (!size.equals(getSize())) { // if the size has changed...
@@ -276,7 +276,7 @@ public class SimulatorView extends JFrame implements ActionListener {
         }
 
         /**
-         * Paint on grid location on this field in a given color.
+         * Pinte no local da grade neste campo em uma determinada cor.
          */
         public void drawMark(int x, int y, Color color) {
             g.setColor(color);
@@ -284,8 +284,8 @@ public class SimulatorView extends JFrame implements ActionListener {
         }
 
         /**
-         * The field view component needs to be redisplayed. Copy the internal image to
-         * screen.
+         * O componente de visualização de campo precisa ser exibido novamente. Copie a
+         * imagem interna para tela.
          */
         public void paintComponent(Graphics g) {
             if (fieldImage != null) {
